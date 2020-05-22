@@ -1,10 +1,5 @@
-const { Router } = require('express');
+const { router, protectedRouter } = require('../helper/routers');
 const userController = require('../controllers/users');
-const { withJWTAuthMiddleware } = require("express-kun");
-const router = Router();
-require('dotenv').config();
-
-const protectedRouter = withJWTAuthMiddleware(router, process.env.JWT_SECRET);
 
 router.post('/', userController.create);
 // get all users only with jwt token
