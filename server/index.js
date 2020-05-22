@@ -18,3 +18,6 @@ mongoose
     console.log("Server has started!")
   })
 })
+.catch(error => {
+  console.log(error)
+})
