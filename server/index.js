@@ -9,6 +9,8 @@ mongoose
 .connect("mongodb://localhost:27017/instashare", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 .then(() => {
   const app = express()
+  // adding body parsing middleware
+  app.use(bodyParser.urlencoded({ extended: false })) 
   app.use(bodyParser.json())
   app.use("/users", userRouter);
 
