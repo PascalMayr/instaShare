@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const routes = require("./routes")
 const bodyParser = require("body-parser")
+const userRouter = require("./routes/user");
 
 // Connecting to MongoDB database
 mongoose
@@ -9,7 +10,7 @@ mongoose
 .then(() => {
   const app = express()
   app.use(bodyParser.json())
-  app.use("/api", routes)
+  app.use("/users", userRouter);
 
   app.listen(5000, () => {
     console.log("Server has started!")
