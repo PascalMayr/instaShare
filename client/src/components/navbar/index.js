@@ -15,13 +15,17 @@ import is_user_logged_in from '../../modules/is_user_logged_in'
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(undefined)
+  const [current_user, setUser] = useState(undefined)
 
   const toggle = () => setIsOpen(!isOpen);
   
-  is_user_logged_in((jwt, user) => get_user(jwt, user, (data) => {
-    setUser(data.user.email)
-  })) // set user email if user is logged in
+  is_user_logged_in((jwt, user) => {
+    if(current_user === undefined){
+      get_user(jwt, user, (data) => {
+        setUser(data.user.email) // set user email if user is logged in
+      })
+    }
+  })
   
   return (
     <div>
@@ -49,7 +53,7 @@ const Navigation = (props) => {
             }
           </Nav>
           {
-            user && <NavbarText>{user}</NavbarText>
+            current_user && <NavbarText>{current_user}</NavbarText>
           }
         </Collapse>
       </Navbar>
