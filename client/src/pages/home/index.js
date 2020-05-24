@@ -60,7 +60,7 @@ const Home = () => {
                     <path fillRule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 6z"/>
                   </svg>
                   <p></p>
-                  <span>Drag 'n' drop a file here, or click to select a file</span>
+                  <span>Drag 'n' drop a file here, or click to upload a file</span>
                 </div>
               </section>
             )}
