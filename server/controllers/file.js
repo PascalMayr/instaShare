@@ -45,12 +45,18 @@ storage.on('connection', (db) => {
 });
 
 async function uploadFile(req, res){
-  upload(req, res, (err) => {
-    if(err){
-      return send_error(res, err, "can't upload file")
-    }
-    send_success(res, "uploaded file successfully")
-  });
+  try{
+    upload(req, res, (error) => {
+      if(error){
+        return send_error(res, error, "can't upload file")
+      }
+      // TODO: zip file after upload
+      send_success(res, "uploaded file successfully")
+    });
+  }
+  catch(error){
+    return send_error(res, error, "can't upload file")
+  }
 };
 
 async function deleteFile(req, res){
