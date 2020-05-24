@@ -11,6 +11,8 @@ const cors = require('cors');
 mongoose
 .connect(process.env.DB_CONNECTION+process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 .then(() => {
+  console.log('Connected to database!')
+  
   const app = express()
   app.use(cors())
   // registering middleware
