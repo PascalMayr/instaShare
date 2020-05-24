@@ -53,6 +53,30 @@ async function uploadFile(req, res){
   });
 };
 
+async function update_metadata(req, res){
+  try{
+    const { id, filename } = req.body
+    const connect = mongoose.createConnection(mongoURI,{ useNewUrlParser:true, useUnifiedTopology: true})
+    connect.once('open', () => {
+      let gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+        bucketName: process.env.BUCKET_NAME
+      })
+      gfs.rename(mongoose.Types.ObjectId(id), filename, (error) => {
+        if(error === null){
+          gfs.find({"_id": mongoose.Types.ObjectId(id)}).toArray((error, files) => {
+            res.send(files)
+          })
+        }
+        else{
+          send_error(res, error, "failed updating filename")
+        }
+      })  
+    })
+  }
+  catch(error){
+    send_error(res, error, "failed updating file")
+  }
+}
 
 async function get_all(req, res){
   try{
@@ -72,4 +96,5 @@ async function get_all(req, res){
 module.exports = {
   uploadFile,
   get_all,
+  update_metadata,
 }
