@@ -97,6 +97,7 @@ async function download (req, res){
           send_error(res, error, "no files available")
         }
         res.setHeader('Content-Type', files[0].contentType)
+        res.setHeader('Content-Disposition', `attachment; filename="${files[0].filename}"`)
         gfs.openDownloadStream(mongoose.Types.ObjectId(id)).pipe(res)
       })
     })
