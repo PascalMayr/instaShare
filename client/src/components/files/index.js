@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'reactstrap';
+import File from '../file'
 
 const Files = (props) => {
   return (
