@@ -26,9 +26,10 @@ const login = (email, password, errorCallback = () => {}, callback = () => {}) =
       }
     }
   })
-  .catch((err) => {
-    throw_error(err, "couldn't login user")
-    errorCallback(err.message, err)
+  .catch((error) => {
+    console.log(JSON.stringify(error))
+    throw_error(error, error.message)
+    errorCallback("Couldn't sign in - please try again", error)
   })
 }
 
