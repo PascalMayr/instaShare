@@ -37,11 +37,13 @@ async function login(req, res) {
   const user = await User.findOne({
     email
   });
-  
+
   if (!user) {
-    throw Error("User not found");
+    res.status(401).json({
+      message: "User not found"
+    });
   }
-  if (bcrypt.compareSync(password, user.password)) {
+  if (bcrypt.compareSync(password, user.password)) { // comparing hashed passwords
     try{
       const token = jwt.sign({ user }, process.env.JWT_SECRET, {
         expiresIn: "24h"
@@ -53,7 +55,7 @@ async function login(req, res) {
     }
   } else {
     res.status(401).json({
-      message: "Unauthenticated"
+      message: "Wrong credentials"
     });
   }
 }
