@@ -56,7 +56,8 @@ async function uploadFile(req, res){
       if(error){
         return send_error(res, error, "Can't upload file")
       }
-      // TODO: zip file after upload
+      // compressing files is done by WiredTiger - no need to store zip files
+      // check this blog post: https://www.mongodb.com/blog/post/new-compression-options-mongodb-30
       send_success(res, "File uploaded successfully")
     });
   }
