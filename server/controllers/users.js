@@ -58,13 +58,7 @@ async function login(req, res) {
   }
 }
 
-async function getAll(req, res) {
-  const user = await User.find({});
-  send_success(res, user)
-}
-
 async function get(req, res) {
-  console.log(req)
   const user = await User.findOne({
     _id: req.params.id
   });
@@ -74,6 +68,5 @@ async function get(req, res) {
 module.exports = {
   create,
   login,
-  get,
-  getAll
+  get
 }
