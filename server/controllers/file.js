@@ -21,6 +21,7 @@ const mongoURI = process.env.DB_CONNECTION+process.env.DB_NAME
 // creating storage engine
 let storage = new GridFsStorage({
   url: mongoURI,
+  cache: '1', // This option enables caching the existing db connection and reuse it for more storage engines - makes the app easily scalable
   file: (req, file) => {
     return {
       bucketName: process.env.BUCKET_NAME,
