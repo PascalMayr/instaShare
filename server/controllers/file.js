@@ -1,6 +1,6 @@
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
-const MongoClient = require('mongodb')
+const mongoose = require('mongoose')
 
 //helper function
 const send_error = function(res, error = {}, message = ""){
@@ -53,6 +53,29 @@ async function uploadFile(req, res){
   });
 };
 
+
+async function download (req, res){
+  try{
+    let id = req.params.id;
+    const connect = mongoose.createConnection(mongoURI,{ useNewUrlParser:true, useUnifiedTopology: true})
+    connect.once('open', () => {
+      let gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+        bucketName: process.env.BUCKET_NAME
+      })
+      gfs.find({"_id": mongoose.Types.ObjectId(id)}).toArray((error, files) => {
+        if(!files[0] || files.length === 0){
+          send_error(res, error, "no files available")
+        }
+        res.setHeader('Content-Type', files[0].contentType)
+        gfs.openDownloadStream(mongoose.Types.ObjectId(id)).pipe(res)
+      })
+    })
+  }
+  catch(error){
+    send_error(res, error, "couldn't download file")
+  }
+};
+
 async function update_metadata(req, res){
   try{
     const { id, filename } = req.body
@@ -96,5 +119,6 @@ async function get_all(req, res){
 module.exports = {
   uploadFile,
   get_all,
+  download,
   update_metadata,
 }
