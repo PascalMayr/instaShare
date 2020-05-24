@@ -4,11 +4,14 @@ import {
   FormGroup, Label, Input,
   Button, Alert
 } from 'reactstrap';
+import action_on_enter from '../../modules/action_on_enter'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const validate = function(){
+  }
   return (
   <main>
   <Container>
@@ -23,6 +26,7 @@ const Login = () => {
             id="email"
             placeholder="myemail@email.com"
             onChange={e => setEmail(e.target.value)}
+            onKeyDown={e =>  action_on_enter(e, validate)}
           />
         </FormGroup>
       </Col>
@@ -35,9 +39,11 @@ const Login = () => {
             id="password"
             placeholder="********"
             onChange={e => setPassword(e.target.value)}
+            onKeyDown={e =>  action_on_enter(e, validate)}
           />
         </FormGroup>
       </Col>
+      <Button onClick={validate}>Submit</Button>
     </Form>
   </Container>
   </main>
