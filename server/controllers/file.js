@@ -53,6 +53,23 @@ async function uploadFile(req, res){
   });
 };
 
+
+async function get_all(req, res){
+  try{
+    MongoClient.connect(mongoURI, function(err, client){
+      const db = client.db(process.env.DB_NAME);
+      const collection = db.collection(process.env.BUCKET_NAME + '.files')
+      collection.find({"metadata.user._id": req.params.userId}).toArray(function(err, docs){
+        res.json(docs)
+      })
+    })
+  }
+  catch(error){
+    send_error(res, error, "failed finding user associated files")
+  }
+}
+
 module.exports = {
   uploadFile,
+  get_all,
 }
