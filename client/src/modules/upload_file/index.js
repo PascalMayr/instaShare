@@ -4,8 +4,7 @@ import throw_error  from '../throw_error'
 
 const upload_file = (file, callback = () => {}) => {
   is_user_logged_in((jwt, user) => {
-    var formData = new FormData();
-    formData.append("file1", file);
+    let formData = new FormData();
     
     const config = {
       headers: {
