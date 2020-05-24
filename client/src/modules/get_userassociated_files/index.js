@@ -12,16 +12,16 @@ const get_userassociated_files = (callback = () => {}) => {
     }
     axios.get(process.env.REACT_APP_SERVER_HOST + "all/" + user, config)
     .then((result) => {
-      if(result.data.tokenExpired){ //TODO: add action when token is expired
-        window.location.href = '/'
+      if(result.data && result.data.tokenExpired){ 
+        //TODO: add action when token is expired
+        throw_error({}, "user token expired")
       }
       else{
-        throw_error({}, "user token expired")
         callback(result.data)
       }
     })
     .catch((err) => {
-      throw_error(err, "could not get associated user files")
+      throw_error(err, "couldn't get associated user files")
     })
   })
 }
