@@ -5,11 +5,11 @@ import qs from 'querystring'
 import throw_error from '../throw_error'
 import is_user_logged_in from '../is_user_logged_in'
 
-const update_metadata = (id, filename = {}, callback = () => {}, errorCallback = () => {}) => {
+const update_metadata = (id, metadata = {}, callback = () => {}, errorCallback = () => {}) => {
   is_user_logged_in((jwt, user) => {
     const requestBody = {
       id,
-      filename
+      metadata: qs.stringify(metadata)
     }
     const config = {
       headers: {

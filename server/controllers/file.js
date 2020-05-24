@@ -1,6 +1,8 @@
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 const mongoose = require('mongoose')
+const MongoClient = require('mongodb')
+const qs = require('querystring')
 
 //helper function
 const send_error = function(res, error = {}, message = ""){
@@ -29,7 +31,10 @@ let storage = new GridFsStorage({
       metadata:{
         user : {
           _id : req.params.userId
-        }
+        },
+        tags : [],
+        available: true,
+        company: ''
       }
     }
   }
@@ -109,7 +114,9 @@ async function download (req, res){
 
 async function update_metadata(req, res){
   try{
-    const { id, filename } = req.body
+    const { id, metadata } = req.body
+    let metadataObject = metadata ? qs.parse(metadata) : {}
+    let filename = metadataObject.filename ? metadataObject.filename : ''
     const connect = mongoose.createConnection(mongoURI,{ useNewUrlParser:true, useUnifiedTopology: true})
     connect.once('open', () => {
       let gfs = new mongoose.mongo.GridFSBucket(connect.db, {
@@ -118,13 +125,37 @@ async function update_metadata(req, res){
       gfs.rename(mongoose.Types.ObjectId(id), filename, (error) => {
         if(error === null){
           gfs.find({"_id": mongoose.Types.ObjectId(id)}).toArray((error, files) => {
-            res.send(files)
+            // updating additional metadata
+            delete metadataObject.filename
+            delete metadataObject.user
+            metadataObject.available = metadataObject.available === 'true' ? true : false
+            metadataObject.tags = metadataObject.tags !== undefined && metadataObject.tags.length > 0 && typeof metadataObject.tags.split === 'function' ? metadataObject.tags.split(',') : []
+            MongoClient.connect(mongoURI, function(error, client){
+              // defining the database
+              const db = client.db(process.env.DB_NAME);
+              // defining the collection which is going to be queried
+              const collection = db.collection(process.env.BUCKET_NAME + '.files')
+              // defining the query
+              const query = {"_id": mongoose.Types.ObjectId(id)}
+              // finding existing document, merging metadata with new metadata, updating the document and sending it back to the client
+              collection.find(query).toArray(function(error, docs){
+                if(error)
+                send_error(res, error, "Couldn't update file metadata")
+                // mergin new with existing metadata
+                const fullMetadata = {...docs[0].metadata, ...metadataObject}
+                collection.updateOne(query, {$set : {metadata: fullMetadata}}, {}, (error, result) => {
+                  collection.find(query).toArray(function(err, docs){
+                    res.json(docs)
+                  })
+                });
+              })
+            })
           })
         }
         else{
           send_error(res, error, "Failed updating filename")
         }
-      })  
+      })
     })
   }
   catch(error){
