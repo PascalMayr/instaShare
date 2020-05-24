@@ -16,11 +16,15 @@ const SignUp = () => {
   // client  side validations
   const validatePassword = function(){
     if(passwordRepeat !== '' && password !== '' && passwordRepeat !== password){
-      setAlert('password must be the same!')
+      setAlert('Password must be the same!')
       return false
     }
     if(password === '' || passwordRepeat === ''){
-      setAlert('password must be set!')
+      setAlert('Password must be set!')
+      return false
+    }
+    if(password.length < 6 || passwordRepeat.length < 6){
+      setAlert('The password must be at least 6 characters long')
       return false
     }
     else{
