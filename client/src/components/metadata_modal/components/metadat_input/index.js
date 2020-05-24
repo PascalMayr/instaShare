@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 
 const MetadataInput = (props) => {
   const { value, onChange, hint = '' } = props
-  const [inputvalue, setInputValue] = useState(value)
+  const [inputValue, setInputValue] = useState(value)
   let inputType = typeof value === 'boolean' ? 'checkbox' : 'string'
-  const toggle = () => setInputValue(!inputvalue);
+  const toggle = () => { 
+    onChange(!inputValue)
+    setInputValue(!inputValue);
+  };
   return (
     <span className="metadataInputHint">
       <input 
-        value={inputvalue}
-        checked={inputvalue}
+        value={inputValue}
+        checked={inputValue}
         type={inputType}
         onChange={e => {
           if(inputType === 'checkbox'){
@@ -17,8 +20,8 @@ const MetadataInput = (props) => {
           }
           else{
             setInputValue(e.target.value);
+            onChange(e.target.value)
           }
-          onChange(e.target.value)
         }}
       />
       &nbsp;
