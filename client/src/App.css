@@ -15,12 +15,20 @@ main{
   cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#noFiles{
+  max-width: 33.33%;
+  padding-top: 3em;
 }
 
+.files{
+  text-align: center;
+}
+
+.filesTitle{
+  padding-bottom: 1em;
+  padding-top: 1em;
+  margin: 0;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -32,8 +40,10 @@ main{
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+@media only screen and (max-width: 850px) {
+  #noFiles{
+    max-width: 33.33%;
+  }
 }
 
 @keyframes App-logo-spin {

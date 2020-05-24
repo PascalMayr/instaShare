@@ -4,6 +4,8 @@ import is_user_logged_in from '../../modules/is_user_logged_in'
 import Dropzone from 'react-dropzone'
 import upload_file from '../../modules/upload_file'
 import get_userassociated_files from '../../modules/get_userassociated_files'
+import no_files_pic from './no_files.svg'
+import Files from '../../components/files'
 
 const Home = () => {
   const [alert, setAlert ] =  useState('')
@@ -63,11 +65,16 @@ const Home = () => {
               </section>
             )}
           </Dropzone>
-          <p></p>
-          {
-            alert !== '' && <Alert color='success'>{alert}</Alert>
-          }
-          <p></p>
+          <div className='files'>
+          <h4 className='filesTitle'>{files.length > 0 ? 'Your uploaded files:' : 'No uploaded fiels yet'}</h4>
+            {
+              files.length > 0 ?
+              <Files files={files} alertFunction={(message) => { setAlert(message) }} /> 
+              // passing an alertFunction in order to call the alert in the components beneath
+              :
+              <img id="noFiles" src={no_files_pic} alt="no files" />
+            }
+          </div>
         </Container>
       }
     </div>
