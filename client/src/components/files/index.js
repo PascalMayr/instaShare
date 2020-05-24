@@ -15,6 +15,11 @@ const Files = (props) => {
           </tr>
         </thead>
         <tbody>
+          {
+            props.files && props.files.length > 0 &&
+            props.files.map((file, index) => <File file={file} key={file.filename + index} {...props}/>)
+          }
+        </tbody>
       </Table>
   );
 };
