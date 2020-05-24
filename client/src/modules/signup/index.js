@@ -1,3 +1,5 @@
+// a simple function to signup a user by email and password
+
 import axios from 'axios'
 import qs from 'querystring'
 import login from '../login'
@@ -16,6 +18,7 @@ const signup = (email, password, errorCallback = () => {}, callback = () => {}) 
   .then((result) => {
     if(result.data.error === undefined){
       callback(result.data)
+      // login user and redirect to home after signup
       login(email, password)
     }
     else{

@@ -1,3 +1,5 @@
+// a simple function to login a user by email and password
+
 import axios from 'axios'
 import qs from 'querystring'
 import throw_error from '../throw_error'
@@ -5,11 +7,11 @@ import throw_error from '../throw_error'
 const login = (email, password, errorCallback = () => {}, callback = () => {}) => {
   const requestBody = {
     email, password
-  }
+  } // creating request body
   const config = {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    } // setting content-type header 
   }
   axios.post(process.env.REACT_APP_SERVER_HOST + "users/login/", qs.stringify(requestBody), config)
   .then((result) => {
@@ -18,6 +20,7 @@ const login = (email, password, errorCallback = () => {}, callback = () => {}) =
         sessionStorage.setItem('user', result.data.user._id)
         sessionStorage.setItem('jwt', result.data.token)
         callback(result.data)
+        // redirecting user back to home after login
         window.location.href = '/'
       }
       if(result.error){

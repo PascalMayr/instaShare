@@ -1,3 +1,5 @@
+// a simple function to delete a file with a specific id
+
 import axios from 'axios'
 import throw_error from '../throw_error'
 import is_user_logged_in from '../is_user_logged_in'

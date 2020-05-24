@@ -1,3 +1,5 @@
+// a simple function to get the current users metadata by his id
+
 import axios from 'axios'
 import throw_error from '../throw_error'
 

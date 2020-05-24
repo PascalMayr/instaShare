@@ -1,3 +1,5 @@
+// get all files uploaded by a specific user
+
 import axios from 'axios'
 import is_user_logged_in from '../is_user_logged_in'
 import throw_error from '../throw_error'

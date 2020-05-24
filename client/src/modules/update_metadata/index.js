@@ -1,3 +1,5 @@
+// a simple function to upadte the filename of a specific file
+
 import axios from 'axios'
 import qs from 'querystring'
 import throw_error from '../throw_error'

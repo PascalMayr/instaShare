@@ -5,12 +5,13 @@ import throw_error  from '../throw_error'
 const upload_file = (file, callback = () => {}) => {
   is_user_logged_in((jwt, user) => {
     let formData = new FormData();
+    formData.append("file1", file); // adding file as formData
     
     const config = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': `Bearer ${jwt}`
-      }
+      } // protected routes need an Authorization header
     }
 
     axios.post(process.env.REACT_APP_SERVER_HOST + "upload/" + user, formData, config)
