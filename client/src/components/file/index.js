@@ -23,6 +23,7 @@ const File = (props) => {
         }}
       />
       </th>
+      <td>{file.contentType}</td>
     </tr>
   );
 };
