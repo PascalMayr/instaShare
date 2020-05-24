@@ -11,15 +11,15 @@ const get_user = (jwt, user, callback = () => {}) => {
   axios.get(process.env.REACT_APP_SERVER_HOST + "user/" + user, config)
   .then((result) => {
     if(result.data.tokenExpired){
+      throw_error({}, "user token is expired")
       window.location.href = '/'
     }
     else{
-      throw_error({}, "user token is expired")
       callback(result.data)
     }
   })
   .catch((err) => {
-    throw_error(err, "could not get user")
+    throw_error(err, "couldn't get user")
   })
 }
 
