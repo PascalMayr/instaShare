@@ -4,6 +4,7 @@ import {
   FormGroup, Label, Input,
   Button, Alert
 } from 'reactstrap';
+import login from '../../modules/login'
 import action_on_enter from '../../modules/action_on_enter'
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const validate = function(){
+        login(email, password, (errorMessage, error) => setAlert(errorMessage))
   }
   return (
   <main>
