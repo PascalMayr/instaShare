@@ -49,14 +49,14 @@ async function uploadFile(req, res){
   try{
     upload(req, res, (error) => {
       if(error){
-        return send_error(res, error, "can't upload file")
+        return send_error(res, error, "Can't upload file")
       }
       // TODO: zip file after upload
-      send_success(res, "uploaded file successfully")
+      send_success(res, "File uploaded successfully")
     });
   }
   catch(error){
-    return send_error(res, error, "can't upload file")
+    return send_error(res, error, "Can't upload File")
   }
 };
 
@@ -70,16 +70,16 @@ async function deleteFile(req, res){
       })
       gfs.delete(mongoose.Types.ObjectId(id), (error, data) => {
         if(error){
-          send_error(res, error, "couldn't delete file")
+          send_error(res, error, "Couldn't delete file")
         }
         else{
-          send_success(res, "deleted file successfully")
+          send_success(res, "File deleted successfully")
         }
       })
     })
   }
   catch(error){
-    send_error(res, error, "couldn't delete file")
+    send_error(res, error, "Couldn't delete file")
   }
 }
 
@@ -94,7 +94,7 @@ async function download (req, res){
       })
       gfs.find({"_id": mongoose.Types.ObjectId(id)}).toArray((error, files) => {
         if(!files[0] || files.length === 0){
-          send_error(res, error, "no files available")
+          send_error(res, error, "No files available")
         }
         res.setHeader('Content-Type', files[0].contentType)
         res.setHeader('Content-Disposition', `attachment; filename="${files[0].filename}"`)
@@ -103,7 +103,7 @@ async function download (req, res){
     })
   }
   catch(error){
-    send_error(res, error, "couldn't download file")
+    send_error(res, error, "Couldn't download file")
   }
 };
 
@@ -122,13 +122,13 @@ async function update_metadata(req, res){
           })
         }
         else{
-          send_error(res, error, "failed updating filename")
+          send_error(res, error, "Failed updating filename")
         }
       })  
     })
   }
   catch(error){
-    send_error(res, error, "failed updating file")
+    send_error(res, error, "Failed updating file")
   }
 }
 
@@ -145,7 +145,7 @@ async function get_all(req, res){
     })
   }
   catch(error){
-    send_error(res, error, "failed finding user associated files")
+    send_error(res, error, "Failed finding user associated files")
   }
 }
 
