@@ -16,9 +16,8 @@ const upload_file = (file, callback = () => {}) => {
 
     axios.post(process.env.REACT_APP_SERVER_HOST + "upload/" + user, formData, config)
     .then((result) => {
-      callback(result.data)
       if(result.data.error === undefined){
-        console.log(result.data)
+        callback(result.data)
       }
       else{
         throw_error(result.data.error, "couldn't upload file")
