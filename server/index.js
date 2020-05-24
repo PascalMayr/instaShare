@@ -1,17 +1,14 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
-const userRouter = require("./routes/user");
+const userRoutes = require("./routes/user");
 
 // Connecting to MongoDB database
 mongoose
 .connect("mongodb://localhost:27017/instashare", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 .then(() => {
   const app = express()
-  // adding body parsing middleware
-  app.use(bodyParser.urlencoded({ extended: false })) 
-  app.use(bodyParser.json())
-  app.use("/users", userRouter);
+  app.use(userRoutes);
 
   app.listen(5000, () => {
     console.log("Server has started!")
