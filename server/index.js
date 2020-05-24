@@ -3,20 +3,34 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const userRoutes = require("./routes/user");
 const fileRoutes = require("./routes/file");
+const morgan = require('morgan')
+const path = require('path')
+const cors = require('cors');
 
 // Connecting to MongoDB database
 mongoose
-.connect("mongodb://localhost:27017/instashare", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+.connect(process.env.DB_CONNECTION+process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 .then(() => {
   const app = express()
+  app.use(cors())
+  // registering middleware
+  app.use(bodyParser.urlencoded({extended: true}));
+  app.use('/scripts', express.static(path.join(__dirname, './node_modules')));
+
+  // logging using morgan
+  app.use(morgan('dev'));
+
   // registering routes
   app.use(userRoutes);
   app.use(fileRoutes);
 
-  app.listen(5000, () => {
-    console.log("Server has started!")
+  // starting the server
+  const port = process.env.PORT || 5000
+
+  app.listen(port, () => {
+    console.log(`Server has started on port: ${port}`)
   })
 })
 .catch(error => {
-  console.log(error)
+  console.error(error)
 })
