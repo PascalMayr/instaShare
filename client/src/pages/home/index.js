@@ -3,9 +3,23 @@ import { Jumbotron, Button, Container, Alert } from 'reactstrap';
 import is_user_logged_in from '../../modules/is_user_logged_in'
 import Dropzone from 'react-dropzone'
 import upload_file from '../../modules/upload_file'
+import get_userassociated_files from '../../modules/get_userassociated_files'
 
 const Home = () => {
   const [alert, setAlert ] =  useState('')
+  const [files, setFiles ] =  useState([]) // the current list of files
+  const [getFiles, setGetFiles ] =  useState(true)
+  if(getFiles){
+    get_userassociated_files((data) => {
+      if(data.length === 0){
+        setGetFiles(false)
+      }
+      if(data.length > 0){
+        setGetFiles(false)
+        setFiles(data)
+      }
+    })
+  } // getting all files for the current user
   return (
     <div>
       {
