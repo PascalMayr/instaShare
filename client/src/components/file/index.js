@@ -24,6 +24,7 @@ const File = (props) => {
       />
       </th>
       <td>{file.contentType}</td>
+      <td>{((file.length / 1024) / 1024).toFixed(2)}</td>
     </tr>
   );
 };
