@@ -18,7 +18,7 @@ const Login = () => {
       if(validity){
         setAlert('')
         login(email, password, (errorMessage, error) => setAlert(errorMessage))
-  }
+      }
       else{
         setAlert('Please enter a valid email!')
       }
