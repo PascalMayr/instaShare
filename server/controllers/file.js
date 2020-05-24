@@ -53,6 +53,29 @@ async function uploadFile(req, res){
   });
 };
 
+async function deleteFile(req, res){
+  let id = req.params.id;
+  try{
+    const connect = mongoose.createConnection(mongoURI,{ useNewUrlParser:true, useUnifiedTopology: true})
+    connect.once('open', () => {
+      let gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+        bucketName: process.env.BUCKET_NAME
+      })
+      gfs.delete(mongoose.Types.ObjectId(id), (error, data) => {
+        if(error){
+          send_error(res, error, "couldn't delete file")
+        }
+        else{
+          send_success(res, "deleted file successfully")
+        }
+      })
+    })
+  }
+  catch(error){
+    send_error(res, error, "couldn't delete file")
+  }
+}
+
 
 async function download (req, res){
   try{
@@ -123,4 +146,5 @@ module.exports = {
   get_all,
   download,
   update_metadata,
+  deleteFile
 }
