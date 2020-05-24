@@ -65,6 +65,9 @@ const Home = () => {
               </section>
             )}
           </Dropzone>
+          {
+            alert !== '' && <Alert color='success' className="mt-3">{alert}</Alert>
+          }
           <div className='files'>
           <h4 className='filesTitle'>{files.length > 0 ? 'Your uploaded files:' : 'No uploaded fiels yet'}</h4>
             {
