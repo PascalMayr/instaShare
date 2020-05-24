@@ -29,15 +29,11 @@ main{
   padding-top: 1em;
   margin: 0;
 }
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.actions{
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 @media only screen and (max-width: 850px) {
