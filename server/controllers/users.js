@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require('dotenv').config();
 
+// helper functions
 const send_success = function(res, user, token = {}, message = ''){
   res.json({
     user,
