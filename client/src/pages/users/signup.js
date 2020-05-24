@@ -4,6 +4,7 @@ import {
   FormGroup, Label, Input,
   Button, Alert
 } from 'reactstrap';
+import signup from '../../modules/signup'
 import action_on_enter from '../../modules/action_on_enter'
 
 const SignUp = () => {
@@ -12,7 +13,7 @@ const SignUp = () => {
   const [passwordRepeat, setPasswordRepeat] = useState('');
  
   const validate = function(){
-    
+          signup(email, password, (errorMessage, error) => setAlert(errorMessage))
   }
   
   return (
