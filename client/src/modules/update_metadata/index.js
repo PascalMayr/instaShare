@@ -5,7 +5,7 @@ import qs from 'querystring'
 import throw_error from '../throw_error'
 import is_user_logged_in from '../is_user_logged_in'
 
-const update_metadata = (id, filename = {}, callback = () => {}) => {
+const update_metadata = (id, filename = {}, callback = () => {}, errorCallback = () => {}) => {
   is_user_logged_in((jwt, user) => {
     const requestBody = {
       id,
@@ -23,6 +23,7 @@ const update_metadata = (id, filename = {}, callback = () => {}) => {
       console.log(result.data)
     })
     .catch((err) => {
+      errorCallback(err)
       throw_error(err, `couldn't update filename for ${id}`)
     })
   })
