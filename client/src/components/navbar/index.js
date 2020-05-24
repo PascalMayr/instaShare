@@ -38,6 +38,7 @@ const Navigation = (props) => {
               !is_user_logged_in() ?
               <React.Fragment>
                 <NavItem>
+                  {/* Link component from react router should be used  */}
                   <NavLink href="/users/">Signup</NavLink>
                 </NavItem>
                 <NavItem>
