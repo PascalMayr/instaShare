@@ -43,12 +43,14 @@ const Home = () => {
         </Jumbotron>
         :
         <Container>
-          <Dropzone onDrop={
+          <Dropzone
+           onDrop={ // uploading a file immediately
             acceptedFiles => upload_file(acceptedFiles[0], (data) =>{
               setAlert(data.message)
+              setGetFiles(true) // get currently uploaded file
               setTimeout(() => {
                 setAlert('')
-              }, 5000)
+              }, 3000)
             })}>
             {({getRootProps, getInputProps}) => (
               <section>
