@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require('dotenv').config();
 
-const send_success = function(res, user, token = {}){
+const send_success = function(res, user, token = {}, message = ''){
   res.json({
     user,
     token,
-    message: `created user: ${user.email} successfully`
+    message: message
   });
 }
 
@@ -25,7 +25,7 @@ async function create(req, res) {
       email,
       password
     });
-    send_success(res, user)
+    send_success(res, user, {}, `created user: ${user.email} successfully`)
   }
   catch(error){
     send_error(res, error)
@@ -37,7 +37,7 @@ async function login(req, res) {
   const user = await User.findOne({
     email
   });
-
+  
   if (!user) {
     throw Error("User not found");
   }
