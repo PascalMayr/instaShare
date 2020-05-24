@@ -103,11 +103,13 @@ async function update_metadata(req, res){
 
 async function get_all(req, res){
   try{
-    MongoClient.connect(mongoURI, function(err, client){
-      const db = client.db(process.env.DB_NAME);
-      const collection = db.collection(process.env.BUCKET_NAME + '.files')
-      collection.find({"metadata.user._id": req.params.userId}).toArray(function(err, docs){
-        res.json(docs)
+    const connect = mongoose.createConnection(mongoURI,{ useNewUrlParser:true, useUnifiedTopology: true})
+    connect.once('open', () => {
+      let gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+        bucketName: process.env.BUCKET_NAME
+      })
+      gfs.find({"metadata.user._id": req.params.userId}).toArray((error, files) => {
+        res.send(files)
       })
     })
   }
