@@ -15,6 +15,7 @@ mongoose
   console.log(chalk.magenta('Connected to database!'))
   
   const app = express()
+  //if(process.env.NODE_ENV === 'development')
   app.use(cors()) // enabling cors for all origins should be avoided - TODO: add a specific origin
   // registering middleware
   app.use(bodyParser.urlencoded({extended: true}));
