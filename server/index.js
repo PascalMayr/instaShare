@@ -19,8 +19,6 @@ mongoose
   app.use(cors()) // enabling cors for all origins should be avoided - TODO: add a specific origin
   // registering middleware
   app.use(bodyParser.urlencoded({extended: true}));
-  app.use('/scripts', express.static(path.join(__dirname, './node_modules')));
-
   // logging using morgan
   app.use(morgan('dev'));
 
