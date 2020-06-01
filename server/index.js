@@ -3,8 +3,8 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const userRoutes = require("./routes/user");
 const fileRoutes = require("./routes/file");
-const morgan = require('morgan')
-const path = require('path')
+const appRoutes = require("./routes/app");
+const morgan = require('morgan');
 const cors = require('cors');
 
 // Connecting to MongoDB database
@@ -25,6 +25,7 @@ mongoose
   // registering routes
   app.use(userRoutes);
   app.use(fileRoutes);
+  app.use(appRoutes);
 
   // starting the server
   const port = process.env.PORT || 5000
