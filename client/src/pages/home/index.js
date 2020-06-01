@@ -6,6 +6,7 @@ import upload_file from '../../modules/upload_file'
 import get_userassociated_files from '../../modules/get_userassociated_files'
 import no_files_pic from './no_files.svg'
 import Files from '../../components/files'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   const [alert, setAlert ] =  useState('')
@@ -29,9 +30,9 @@ const Home = () => {
         <Jumbotron>
           <p className="lead">This is a simple application to upload large files which can be shared instantly.</p>
           <p className="lead">
-            <a href="/users/">
+            <Link to="/users">
               <Button color="primary">Upload a file now</Button>
-            </a>
+            </Link>
           </p>
           <hr className="my-2" />
           <p>The app is using GridFS - a feature provided by mongodb for storing and retrieving files that exceed the BSON-document size limit of 16 MB.</p>

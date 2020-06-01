@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import get_user from '../../modules/get_user'
 import is_user_logged_in from '../../modules/is_user_logged_in'
+import { Link } from 'react-router-dom'
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,11 +39,10 @@ const Navigation = (props) => {
               !is_user_logged_in() ?
               <React.Fragment>
                 <NavItem>
-                  {/* Link component from react router should be used  */}
-                  <NavLink href="/users/">Signup</NavLink>
+                  <Link className="nav-link" to="/users">Signup</Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/users/login">Login</NavLink>
+                  <Link className="nav-link" to="/users/login">Login</Link>
                 </NavItem>
               </React.Fragment>
               :
